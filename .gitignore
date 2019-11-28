@@ -1,0 +1,9 @@
+/vagrant.config.yml
+/ansible_vagrant/roles/*
+!/ansible_vagrant/roles/local_docker_runner_fix
+/.idea
+/nbproject
+.vagrant
+.DS_Store
+*.retry
+*.log

@@ -1,0 +1,28 @@
+---
+
+- name: Copy daemon.json.j2 to /etc/docker/daemon.json
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: restart docker
+  systemd:
+    name: docker
+    state: restarted
+
+- name: add extra_host for dns resolution
+  lineinfile:
+    path: /etc/gitlab-runner/config.toml
+    regexp: "^    extra_hosts ="
+    insertafter: "^  \\[runners.docker\\]"
+    line: "    extra_hosts = \\[\"{{ gitlab_domain }}:{{ gitlab_ip }}\"\\]"
+
+- name: restart gitlab-runner
+  systemd:
+    name: gitlab-runner
+    state: restarted
+
+...

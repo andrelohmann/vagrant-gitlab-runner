@@ -1,0 +1,11 @@
+---
+configs:
+  memory: "6144"
+  cpus: "4"
+  ip: "192.168.166.177"
+  domain: git.lab.lokal # changing this needs changes in ansible_vagrant/playbook.yml too
+  aliases: # changing this needs changes in ansible_vagrant/playbook.yml too
+  - docker.lab.lokal
+  - chat.lab.lokal
+  - runner.lab.lokal
+...

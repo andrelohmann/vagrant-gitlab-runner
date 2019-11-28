@@ -1,0 +1,62 @@
+---
+- hosts: all
+  become: true
+  become_method: sudo
+
+  vars:
+    mailhog_smtp_port: 25
+    gitlab_domain: git.lab.lokal
+    gitlab_ip: "{{ GITLAB_IP }}"
+    gitlab_registry_domain: docker.lab.lokal
+    gitlab_release: 12.5.0-ce.0
+    gitlab_ee: True
+    gitlab_initial_root_password: PassW0rd
+    gitlab_external_url: http://git.lab.lokal
+    gitlab_letsencrypt_enable: False
+    gitlab_activate_monitoring: True
+    gitlab_registry_external_url: http://docker.lab.lokal
+    gitlab_additional_configs:
+    - namespace: gitlab_rails
+      var: gitlab_email_from
+      value: "'gitlab@lab.lokal'"
+    - namespace: gitlab_rails
+      var: gitlab_email_reply_to
+      value: "'gitlab@lab.lokal'"
+    - namespace: gitlab_rails
+      var: smtp_enable
+      value: "true"
+    - namespace: gitlab_rails
+      var: smtp_address
+      value: "'localhost'"
+    - namespace: gitlab_rails
+      var: smtp_port
+      value: 25
+    gitlab_mattermost_external_url: http://chat.lab.lokal
+    gitlab_mattermost_additional_configs:
+      TeamSettings:
+        SiteName: "chat.lab.lokal"
+      EmailSettings:
+        EnableSignUpWithEmail: False
+        EnableSignInWithEmail: False
+        EnableSignInWithUsername: False
+        SendEmailNotifications: True
+        UseChannelInEmailNotifications: True
+        FeedbackName: "chat.lab.lokal"
+        FeedbackEmail: "gitlab@lab.lokal"
+        SMTPUsername: "gitlab@lab.lokal"
+        SMTPServer: "localhost"
+        SMTPPort: "25"
+    docker_users:
+    - vagrant
+    gitlab_runner_description: runner.lab.lokal
+
+  roles:
+  - andrelohmann.root_colored_prompt
+  - andrelohmann.mailhog
+  - andrelohmann.docker
+  - andrelohmann.gitlab
+  - andrelohmann.gitlab_runner_token
+  - andrelohmann.gitlab_docker_runner
+  - local_docker_runner_fix
+
+...

@@ -1,0 +1,8 @@
+---
+- andrelohmann.root_colored_prompt
+- andrelohmann.mailhog
+- andrelohmann.docker
+- andrelohmann.gitlab
+- andrelohmann.gitlab_runner_token
+- andrelohmann.gitlab_docker_runner
+...
